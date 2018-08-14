@@ -48,23 +48,30 @@ def find_peaks(df,test=False):
     """
     
     #display(df)
-    peaks = peakutils.indexes(df['Value'].values, thres=0.15, min_dist=10)
-    #print(peaks)
-    #plt.figure(figsize=(10,10))
-    #df['Value'].plot()
-    #plt.scatter(peaks,np.zeros(len(peaks)))
-    #plt.show()
+    #peaks = peakutils.indexes(df['Value'].values, thres=0.15, min_dist=10
     peak_bps = [35,50,150,300,400,500,600,700,1000,2000,3000,7000,10380]
-    peak_times = df['Time'].values[peaks[1:-1]]
-    #print(peak_times)
-    
-    if test:
-        plt.figure()
-        df.plot('Time','Value')
-        plt.scatter(peak_times,np.zeros(len(peak_times)))
-        plt.show()
-        print(len(peaks),len(peak_bps))
-    
+    for threshold in [0.30,0.20,0.15,0.10,0.05]:
+        peaks = peakutils.indexes(df['Value'].values, thres=threshold, min_dist=10)
+        #print(peaks)
+        #plt.figure(figsize=(10,10))
+        #df['Value'].plot()
+        #plt.scatter(peaks,np.zeros(len(peaks)))
+        #plt.show()
+        peak_times = df['Time'].values[peaks[1:-1]]
+        #print(peak_times)
+
+        if test:
+            print('testing!')
+            plt.figure()
+            df.plot('Time','Value')
+            plt.scatter(peak_times,np.zeros(len(peak_times)))
+            plt.show()
+            print(len(peaks),len(peak_bps))
+            print(len(peak_times),len(peak_bps))
+            
+        if len(peak_times) == len(peak_bps):
+            break
+
     return peak_times,peak_bps
 
 def normalize_peak(df,start_bp=500,end_bp=11000):
@@ -87,6 +94,7 @@ def normalize_peak(df,start_bp=500,end_bp=11000):
 def load_data(file_id,plot=False):
     """load bioanalyzer data from a set of two csvs. Return a pandas series."""
     for file in glob.glob(file_id+'*'):
+        #print(file)
         #Load Ladder Data
         if 'Ladder' in file:
             ladder_df = pd.read_csv(file,skiprows=17)[:-1]
@@ -102,6 +110,8 @@ def load_data(file_id,plot=False):
         #Load Sample Data
         elif 'Sample' in file:
             sample_df = pd.read_csv(file,skiprows=17)[:-2]
+            #if isinstance(sample_df.loc[0,'Cluster Density (K/mm^2)'],str):
+            #    sample_df.loc[0,'Cluster Density (K/mm^2)'] = sample_df.loc[0,'Cluster Density (K/mm^2)'].replace(',','')
             sample_df = sample_df.apply(np.vectorize(float))
             sample_df['base pairs'] = sample_df['Time'].apply(time_to_bps)
             for column in ['Library Loading Concentration (pM)','Cluster Density (K/mm^2)']:

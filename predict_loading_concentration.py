@@ -31,11 +31,12 @@ if __name__ == "__main__":
     ladder_df = pd.read_csv(args.LAD,skiprows=17)[:-1]
     ladder_df = ladder_df.apply(np.vectorize(float))
     peak_times,peak_bps = find_peaks(ladder_df)
-    time_to_bps = interp1d(peak_times,peak_bps,fill_value='extrapolate',kind='slinear')
-
+    
     #Check to make sure the right number of peaks were found in the ladder
     if len(peak_times) != len(peak_bps):
-        raise('Could Not Find Peaks in Ladder File! Bug Zak to Increase the Robustness of the Peak Finding Algorithm')
+        raise Exception('Could Not Find Peaks in Ladder File! Bug Zak to Increase the Robustness of the Peak Finding Algorithm')
+    
+    time_to_bps = interp1d(peak_times,peak_bps,fill_value='extrapolate',kind='slinear')
     
     #Load & Parse Bioanalyzer Run
     sample_df = pd.read_csv(args.BAF,skiprows=17)[:-2]
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     #state_df = pd.DataFrame(state,columns=[str(int(bp)) for bp in bps])
     
     #Load Model
-    with open('model/model.pkl','rb') as fp:
+    with open('model/model30.pkl','rb') as fp:
         model = pickle.load(fp)
         
     predict_loading_concentration(state,model,output_file=args.OF)

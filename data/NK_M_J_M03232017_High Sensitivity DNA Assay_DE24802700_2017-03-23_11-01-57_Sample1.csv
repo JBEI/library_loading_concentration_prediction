@@ -16,7 +16,7 @@ Sample Name,sample 1,,
 Number of Events,2121,,
  ,,,
 Time,Value,Library Loading Concentration (pM),Cluster Density (K/mm^2)
-32,0.1926466,13,1352
+32,0.1926466,13,"1,352"
 32.05,0.3419459,,
 32.1,0.4330825,,
 32.15,0.4467301,,
