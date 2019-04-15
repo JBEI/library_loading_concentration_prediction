@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='diva_seq_opt',
-      version='0.0.2',
+      version='0.0.3',
       description='Predict the library loading concentration to use for mi-seq runs based on bioanalyzer data.',
       url='https://github.com/JBEI/library_loading_concentration_prediction',
       author='Zak Costello',
