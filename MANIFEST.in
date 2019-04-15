@@ -1,0 +1,2 @@
+include README.md
+include diva_seq_opt/model/*
