@@ -1,15 +1,20 @@
 #!/usr/bin/python
-from diva_dna_seq.utility import aproximate_sequence,prepare_data
-from diva_dna_seq import predict_loading_concentration
+from diva_seq_opt.utility import aproximate_sequence,prepare_data
+from diva_seq_opt import predict_loading_concentration
+import diva_seq_opt
 import argparse
 import pickle
+import numpy as np
+import os
 
 #Allow Matplotlib to be used on commandline
 import matplotlib as mpl
 mpl.use('Agg')
 
+
+
 #Handle inputs
-def main():
+def main():    
     #Parse Inputs
     parser = argparse.ArgumentParser(description='Use BioAnalyzer Data to Predict Library Loading Concentration for Library Barcoding')
     
@@ -19,7 +24,9 @@ def main():
     args = parser.parse_args()
     
     #Load Model
-    with open('../model/model30.pkl','rb') as fp:
+    model_path = os.path.dirname(os.path.realpath(diva_seq_opt.__file__))
+    model_path = os.path.join(model_path,'model/model30.pkl')
+    with open(model_path,'rb') as fp:
         model = pickle.load(fp)
     
     #Prepare Data

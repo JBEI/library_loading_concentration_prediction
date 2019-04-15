@@ -1,4 +1,4 @@
-#Supress Warnings from Integrator
+#Supress Warnings from Integrator (This could be made more specific)
 import warnings
 warnings.filterwarnings("ignore")
 
