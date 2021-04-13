@@ -4,8 +4,8 @@ def warn(*args, **kwargs):
 import warnings
 warnings.warn = warn
 
-from diva_dna_seq.utility import aproximate_sequence,prepare_data
-from diva_dna_seq import predict_loading_concentration
+from diva_seq_opt.utility import aproximate_sequence,prepare_data
+from diva_seq_opt import predict_loading_concentration
 import argparse
 import pickle
 
@@ -25,7 +25,7 @@ parser.add_argument('OF' ,type=str, help='Prediction Plot output file, *.png')
 args = parser.parse_args()
 
 #Load Model
-with open('../model/model30.pkl','rb') as fp:
+with open('./diva_seq_opt/model/model30.pkl','rb') as fp:
     model = pickle.load(fp)
 
 #Prepare Data
