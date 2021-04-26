@@ -1,6 +1,5 @@
 #!/usr/bin/python
 from diva_seq_opt.utility import aproximate_sequence,prepare_data
-from diva_seq_opt import predict_loading_concentration
 import diva_seq_opt
 import argparse
 import pickle
