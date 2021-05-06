@@ -12,4 +12,4 @@ pip install diva_dna_seq
 
 ## Use
 
-This tool can then be used either in a Jupyter notebook or on the command line. A bioanalyzer ladder file and result file are needed. The tool generates a plot that relates library loading concentration for your library to 
+This tool can then be used either in a Jupyter notebook or on the command line. A bioanalyzer ladder file and result file are needed. The tool generates a plot that relates library loading concentration for your library to the MiSeq flow cell cluster density.
