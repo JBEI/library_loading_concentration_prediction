@@ -7,11 +7,11 @@ warnings.warn = warn
 from diva_seq_opt import utility
 import argparse
 import pickle
+import matplotlib as mpl
 
 
 def main():
 	#Allow Matplotlib to be used on commandline
-	import matplotlib as mpl
 	mpl.use('Agg')
 
 	#Handle inputs
