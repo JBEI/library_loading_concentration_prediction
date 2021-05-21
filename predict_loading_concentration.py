@@ -4,35 +4,37 @@ def warn(*args, **kwargs):
 import warnings
 warnings.warn = warn
 
-from diva_dna_seq.utility import aproximate_sequence,prepare_data
-from diva_dna_seq import predict_loading_concentration
+from diva_seq_opt import utility
 import argparse
 import pickle
-
-
-
-#Allow Matplotlib to be used on commandline
 import matplotlib as mpl
-mpl.use('Agg')
 
-#Handle inputs
-#Parse Inputs
-parser = argparse.ArgumentParser(description='Use BioAnalyzer Data to Predict Library Loading Concentration for Library Barcoding')
 
-parser.add_argument('BAF',type=str, help='BioAnalyzer CSV')
-parser.add_argument('LAD',type=str, help='Ladder CSV')
-parser.add_argument('OF' ,type=str, help='Prediction Plot output file, *.png')
-args = parser.parse_args()
+def main():
+	#Allow Matplotlib to be used on commandline
+	mpl.use('Agg')
 
-#Load Model
-with open('../model/model30.pkl','rb') as fp:
-    model = pickle.load(fp)
+	#Handle inputs
+	#Parse Inputs
+	parser = argparse.ArgumentParser(description='Use BioAnalyzer Data to Predict Library Loading Concentration for Library Barcoding')
 
-#Prepare Data
-sample_df = prepare_data(args.LAD,args.BAF)
+	parser.add_argument('BAF',type=str, help='BioAnalyzer CSV')
+	parser.add_argument('LAD',type=str, help='Ladder CSV')
+	parser.add_argument('OF' ,type=str, help='Prediction Plot output file, *.png')
+	args = parser.parse_args()
 
-#Create Features
-state,bps = aproximate_sequence(sample_df,n=10,stop=12000)    
+	#Load Model
+	with open('./diva_seq_opt/model/model30.pkl','rb') as fp:
+	    model = pickle.load(fp)
 
-#Predict
-predict_loading_concentration(state,model,output_file=args.OF)
+	#Prepare Data
+	sample_df = utility.prepare_data(args.LAD,args.BAF)
+
+	#Create Features
+	state,bps = utility.aproximate_sequence(sample_df,n=10,stop=12000)
+
+	#Predict
+	utility.predict_loading_concentration(state,model,output_file=args.OF)
+
+if __name__ == "__main__":
+    main()

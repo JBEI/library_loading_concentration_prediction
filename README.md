@@ -4,10 +4,9 @@ This package is a repository of tools used by the DIVA DNA Seq team at the Joint
 
 ## Installation 
 
-The tool can be installed using pip with 
-
-```bash
-pip install diva_dna_seq
+The dependencies of this tool can be installed with:
+```
+pip install -r requirements.txt
 ```
 
 ## Use
